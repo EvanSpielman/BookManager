@@ -1,0 +1,58 @@
+﻿<Window x:Class="BookManager.BookManagerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:BookManager="clr-namespace:BookManager"
+        mc:Ignorable="d"
+        Title="BookManagerView" Height="300" Width="500">
+    <DockPanel>
+        <StackPanel x:Name="ButtonPanel"
+                    Orientation="Horizontal"
+                    Height="30"
+                    DockPanel.Dock="Top">
+            <Button x:Name="DeleteRowButton"
+                    Width="Auto"
+                    Content="Delete"
+                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=BookManager:BookManagerView}}"/>
+            <Button x:Name="ClearSelection"
+                    Width="Auto"
+                    Content="ClearSelection"
+                    Command="{Binding DataContext.ClearSelectionCommand, RelativeSource={RelativeSource AncestorType=BookManager:BookManagerView}}"/>
+            <TextBox x:Name="BookNameFilter"
+                     Width="100"
+                     Text="{Binding DataContext.BookFilter,RelativeSource={RelativeSource AncestorType=BookManager:BookManagerView}, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StatusBar x:Name="StatusBar"
+                   DockPanel.Dock="Bottom"
+                   Height="50">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem />
+        </StatusBar>
+        <DataGrid x:Name="BookGrid"
+                  ItemsSource="{Binding DataContext.BookListView,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=BookManager:BookManagerView}}"
+                  SelectedItem="{Binding DataContext.SelectedBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=BookManager:BookManagerView}}"
+                  AutoGenerateColumns="False"
+                  DockPanel.Dock="Bottom"
+                  HorizontalAlignment="Stretch"
+                  CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Title"
+                                    Width="*"
+                                    Binding="{Binding Title}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Window>
