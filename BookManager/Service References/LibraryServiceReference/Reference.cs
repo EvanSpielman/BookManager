@@ -15,7 +15,7 @@ namespace BookManager.LibraryServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Book", Namespace="http://schemas.datacontract.org/2004/07/Library.DataTypes")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Book", Namespace="http://schemas.datacontract.org/2004/07/Library")]
     [System.SerializableAttribute()]
     public partial class Book : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -172,7 +172,7 @@ namespace BookManager.LibraryServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Publisher", Namespace="http://schemas.datacontract.org/2004/07/Library.DataTypes")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Publisher", Namespace="http://schemas.datacontract.org/2004/07/Library")]
     [System.SerializableAttribute()]
     public partial class Publisher : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -232,7 +232,7 @@ namespace BookManager.LibraryServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="BookStatus", Namespace="http://schemas.datacontract.org/2004/07/Library.DataTypes")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BookStatus", Namespace="http://schemas.datacontract.org/2004/07/Library")]
     public enum BookStatus : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -246,7 +246,7 @@ namespace BookManager.LibraryServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Genre", Namespace="http://schemas.datacontract.org/2004/07/Library.DataTypes")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Genre", Namespace="http://schemas.datacontract.org/2004/07/Library")]
     public enum Genre : int {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -270,7 +270,7 @@ namespace BookManager.LibraryServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Review", Namespace="http://schemas.datacontract.org/2004/07/Library.DataTypes")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Review", Namespace="http://schemas.datacontract.org/2004/07/Library")]
     [System.SerializableAttribute()]
     public partial class Review : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -356,16 +356,16 @@ namespace BookManager.LibraryServiceReference {
         System.Threading.Tasks.Task<BookManager.LibraryServiceReference.Book[]> GetAllBooksAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibraryService/SaveBook", ReplyAction="http://tempuri.org/ILibraryService/SaveBookResponse")]
-        void SaveBook();
+        bool SaveBook();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibraryService/SaveBook", ReplyAction="http://tempuri.org/ILibraryService/SaveBookResponse")]
-        System.Threading.Tasks.Task SaveBookAsync();
+        System.Threading.Tasks.Task<bool> SaveBookAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibraryService/DeleteBook", ReplyAction="http://tempuri.org/ILibraryService/DeleteBookResponse")]
-        void DeleteBook(string title, string author);
+        bool DeleteBook(string title, string author);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibraryService/DeleteBook", ReplyAction="http://tempuri.org/ILibraryService/DeleteBookResponse")]
-        System.Threading.Tasks.Task DeleteBookAsync(string title, string author);
+        System.Threading.Tasks.Task<bool> DeleteBookAsync(string title, string author);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -403,19 +403,19 @@ namespace BookManager.LibraryServiceReference {
             return base.Channel.GetAllBooksAsync();
         }
         
-        public void SaveBook() {
-            base.Channel.SaveBook();
+        public bool SaveBook() {
+            return base.Channel.SaveBook();
         }
         
-        public System.Threading.Tasks.Task SaveBookAsync() {
+        public System.Threading.Tasks.Task<bool> SaveBookAsync() {
             return base.Channel.SaveBookAsync();
         }
         
-        public void DeleteBook(string title, string author) {
-            base.Channel.DeleteBook(title, author);
+        public bool DeleteBook(string title, string author) {
+            return base.Channel.DeleteBook(title, author);
         }
         
-        public System.Threading.Tasks.Task DeleteBookAsync(string title, string author) {
+        public System.Threading.Tasks.Task<bool> DeleteBookAsync(string title, string author) {
             return base.Channel.DeleteBookAsync(title, author);
         }
     }

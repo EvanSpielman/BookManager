@@ -39,10 +39,12 @@
                     </Grid>
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
-            <StatusBarItem />
+            <StatusBarItem Grid.Column="0">
+                <ProgressBar Minimum="0" Maximum="100" IsIndeterminate="True"  Width="90" Height="32" />
+            </StatusBarItem>
         </StatusBar>
         <DataGrid x:Name="BookGrid"
-                  ItemsSource="{Binding DataContext.BookListView,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=BookManager:BookManagerView}}"
+                  ItemsSource="{Binding DataContext.BookCollectionView,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=BookManager:BookManagerView}}"
                   SelectedItem="{Binding DataContext.SelectedBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=BookManager:BookManagerView}}"
                   AutoGenerateColumns="False"
                   DockPanel.Dock="Bottom"

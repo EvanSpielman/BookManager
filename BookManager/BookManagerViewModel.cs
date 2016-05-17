@@ -1,27 +1,30 @@
-﻿using BookManager.LibraryServiceReference;
+﻿using System;
+using System.Collections.Generic;
+using BookManager.LibraryServiceReference;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace BookManager
 {
     public class BookManagerViewModel : BaseViewModel
     {
-        private readonly LibraryServiceClient _client;
+        private readonly LibraryServiceManager _libraryServiceManager;
         private BookViewModel _selectedBook;
-        private ObservableCollection<BookViewModel> _books;
         private string _bookFilter;
+        private ICollectionView _bookCollectionView;
 
         public BookManagerViewModel()
         {
-            _client = new LibraryServiceClient();
+            _libraryServiceManager = new LibraryServiceManager();
             RefreshBooks();
         }
 
         private bool CanClearSelection()
         {
-            return SelectedBook != null;
+            return SelectedBook != null && !IsBusy;
         }
 
         private void ClearSelection()
@@ -31,12 +34,16 @@ namespace BookManager
 
         private bool CanDeleteBook()
         {
-            return SelectedBook != null;
+            return SelectedBook != null && !IsBusy;
         }
 
         private void DeleteBook()
         {
-            _client.DeleteBook(_selectedBook.Title, _selectedBook.Author);
+            NotifyDeleteBook = new NotifyTaskCompletion<bool>(
+                _libraryServiceManager.DeleteBook(_selectedBook.Title, _selectedBook.Author), "DeleteBook", 
+                null, 
+                ClearSelectionCommand, 
+                DeleteCommand);
             RefreshBooks();
         }
 
@@ -71,34 +78,49 @@ namespace BookManager
                 NotifyPropertyChanged("BookFilter");
                 if (value.Length > 0)
                 {
-                    BookListView.Filter = o => ((BookViewModel) o).Title.Contains(value);
+                    BookCollectionView.Filter = o => ((BookViewModel) o).Title.Contains(value);
                 }
                 else
                 {
-                    BookListView.Filter = null;
+                    BookCollectionView.Filter = null;
                 }
                 
             }
         }
 
-        public ICollectionView BookListView { get; set; }
+        public ICollectionView BookCollectionView
+        {
+            get { return _bookCollectionView; }
+            set
+            {
+                _bookCollectionView = value;
+                NotifyPropertyChanged("BookCollectionView");           
+            }
+        }
+
+        public NotifyTaskCompletion<List<BookViewModel>> NotifyGetBookViewModels { get; set; }
+
+        public NotifyTaskCompletion<bool> NotifyDeleteBook { get; set; }
 
         private void RefreshBooks()
         {
-            var bookViewModels = (from book in _client.GetAllBooks()
-                select CreateBookViewModel(book)).ToList();
-            _books = new ObservableCollection<BookViewModel>(bookViewModels);
-            BookListView = CollectionViewSource.GetDefaultView(_books);
+            NotifyGetBookViewModels = new NotifyTaskCompletion<List<BookViewModel>>(
+                _libraryServiceManager.GetBookViewModels(),
+                "GetAllBooks",
+                books => BookCollectionView = CollectionViewSource.GetDefaultView(books),
+                DeleteCommand,
+                ClearSelectionCommand);
         }
 
-        private BookViewModel CreateBookViewModel(Book book)
+        private bool IsBusy
         {
-            return new BookViewModel
+            get
             {
-                Title = book.Title,
-                Author = book.Author,
-                LibraryCode = book.LibraryCode
-            };
+                var deleting = NotifyDeleteBook != null && NotifyDeleteBook.IsRunning;
+                var refreshing = NotifyGetBookViewModels != null && NotifyGetBookViewModels.IsRunning;
+
+                return deleting || refreshing;
+            }
         }
     }
 }
