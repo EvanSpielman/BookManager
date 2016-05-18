@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BookManager
+﻿namespace BookManager
 {
+    /// <summary>
+    /// Representation of a Book domain object returned from the web service
+    /// </summary>
     public class BookViewModel
     {
         public string Title { get; set; }

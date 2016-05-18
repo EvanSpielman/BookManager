@@ -6,6 +6,9 @@
         xmlns:BookManager="clr-namespace:BookManager"
         mc:Ignorable="d"
         Title="BookManagerView" Height="300" Width="500">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
     <DockPanel>
         <StackPanel x:Name="ButtonPanel"
                     Orientation="Horizontal"
@@ -33,14 +36,22 @@
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="100" />
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <StatusBarItem Grid.Column="0">
-                <ProgressBar Minimum="0" Maximum="100" IsIndeterminate="True"  Width="90" Height="32" />
+                <ProgressBar Minimum="0" 
+                             Maximum="100" 
+                             IsIndeterminate="True" 
+                             Visibility="{Binding DataContext.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=BookManager:BookManagerView}}" 
+                             Width="90" 
+                             Height="32" />
+            </StatusBarItem>
+            <Separator Grid.Column="1"/>
+            <StatusBarItem Grid.Column="2">
+                <TextBlock x:Name="Status"
+                           Text="{Binding DataContext.Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=BookManager:BookManagerView}}"/>
             </StatusBarItem>
         </StatusBar>
         <DataGrid x:Name="BookGrid"

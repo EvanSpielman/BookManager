@@ -66,7 +66,6 @@
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="LibraryServiceManager.cs" />
     <Compile Include="ModelFactory.cs" />
-    <Compile Include="NotifyTaskCompletion.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Service References\LibraryServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>

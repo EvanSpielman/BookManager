@@ -15,7 +15,6 @@ namespace BookManager
     {
         private readonly Predicate<object> _canExecute;
         private readonly Action<object> _execute;
-        private event EventHandler CanExecuteChangedInternal;
 
         public DelegateCommand(Action<object> execute, Predicate<object> canExecute)
         {
@@ -35,27 +34,19 @@ namespace BookManager
 
         /// <summary>
         /// Hook into the existing CommandManager.RequerySuggested event,
-        /// and also add a local handle to the event handler so we can manually
-        /// notify when the CanExecute should be updated
+        /// so the DelegateCommand's CanExecute is updated
         /// </summary>
         public event EventHandler CanExecuteChanged
         {
             add
             {
                 CommandManager.RequerySuggested += value;
-                this.CanExecuteChangedInternal += value;
             }
 
             remove
             {
                 CommandManager.RequerySuggested -= value;
-                this.CanExecuteChangedInternal -= value;
             }
-        }
-
-        public void RaiseCanExecuteChanged()
-        {
-            CanExecuteChangedInternal?.Invoke(this, EventArgs.Empty);
         }
     }
 }
