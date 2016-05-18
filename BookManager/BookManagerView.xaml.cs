@@ -22,7 +22,6 @@ namespace BookManager
         public BookManagerView()
         {
             InitializeComponent();
-            DataContext = new BookManagerViewModel();
         }
     }
 }

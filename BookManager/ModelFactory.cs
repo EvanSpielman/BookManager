@@ -9,6 +9,8 @@ namespace BookManager
     /// </summary>
     public class ModelFactory
     {
+        #region Public Methods
+
         /// <summary>
         /// Create book view models from a collection of book domain objects
         /// </summary>
@@ -16,8 +18,12 @@ namespace BookManager
         /// <returns>A list of book view models</returns>
         public List<BookViewModel> CreateBookViewModels(ICollection<Book> books)
         {
-            return books.Select(CreateBookViewModel).ToList();
+            return books?.Select(CreateBookViewModel).ToList() ?? new List<BookViewModel>();
         }
+
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// Creates a book view model from a book domain object
@@ -33,5 +39,7 @@ namespace BookManager
                 LibraryCode = book.LibraryCode
             };
         }
+
+        #endregion
     }
 }

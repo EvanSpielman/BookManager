@@ -9,16 +9,34 @@ namespace BookManager
     /// </summary>
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
+        #region Fields
+
         private bool _isBusy;
         private string _status;
 
+        #endregion
+
+        #region Events
+
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Notify when a specific property has been changed
+        /// </summary>
+        /// <param name="propertyName">Optional - specify the name of the property</param>
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
+
+        #region Properties
 
         public bool IsBusy
         {
@@ -44,5 +62,7 @@ namespace BookManager
                 OnPropertyChanged();
             }
         }
+
+        #endregion
     }
 }

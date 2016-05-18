@@ -13,14 +13,39 @@ namespace BookManager
     /// </summary>
     public class DelegateCommand : ICommand
     {
+        #region Fields
+
         private readonly Predicate<object> _canExecute;
         private readonly Action<object> _execute;
+
+        #endregion
+
+        #region Constructor
 
         public DelegateCommand(Action<object> execute, Predicate<object> canExecute)
         {
             _execute = execute;
             _canExecute = canExecute;
         }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Hook into the existing CommandManager.RequerySuggested event,
+        /// so the DelegateCommand's CanExecute is updated
+        /// </summary>
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        #endregion
+
+        #region Public Methods
 
         public bool CanExecute(object parameter)
         {
@@ -32,21 +57,6 @@ namespace BookManager
             _execute(parameter);
         }
 
-        /// <summary>
-        /// Hook into the existing CommandManager.RequerySuggested event,
-        /// so the DelegateCommand's CanExecute is updated
-        /// </summary>
-        public event EventHandler CanExecuteChanged
-        {
-            add
-            {
-                CommandManager.RequerySuggested += value;
-            }
-
-            remove
-            {
-                CommandManager.RequerySuggested -= value;
-            }
-        }
+        #endregion
     }
 }

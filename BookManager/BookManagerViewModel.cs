@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -169,7 +170,8 @@ namespace BookManager
                 {
                     IsBusy = false;
                     Status = null;
-                }, null);
+                },
+                () => { MessageBox.Show("An error occurred while deleting a book."); });
             RefreshBooks();
         }
 
@@ -186,8 +188,10 @@ namespace BookManager
             {
                 IsBusy = false;
                 Status = null;
-            }, null);
-            BookCollectionView = CollectionViewSource.GetDefaultView(books);
+            },
+            () => { MessageBox.Show("An error occurred while refreshing books."); });
+
+            BookCollectionView = CollectionViewSource.GetDefaultView(books);             
         }
 
         /// <summary>

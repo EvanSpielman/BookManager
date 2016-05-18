@@ -4,6 +4,5 @@
              xmlns:local="clr-namespace:BookManager"
              StartupUri="BookManagerView.xaml">
     <Application.Resources>
-         
     </Application.Resources>
 </Application>
