@@ -37,6 +37,7 @@ namespace BookManager
         {
             Dispose();
         }
+
         #endregion
 
         #region Public Methods
@@ -62,13 +63,10 @@ namespace BookManager
         /// <param name="afterAction">Action to perform after completing the call to the web service</param>
         /// <param name="errorAction">Action to perform if the web service encounters an error</param>
         /// <returns>The result of the deletion - true meaning the delete was successful.</returns>
-        public async Task<bool> DeleteBook(string title, string author, Action beforeAction, Action afterAction,
+        public async Task DeleteBook(string title, string author, Action beforeAction, Action afterAction,
             Action errorAction)
         {
-            return
-                await
-                    RunAsync(_libraryServiceClient.DeleteBookAsync(title, author), beforeAction, afterAction,
-                        errorAction);
+            await RunAsync(_libraryServiceClient.DeleteBookAsync(title, author), beforeAction, afterAction, errorAction);
         }
 
         #endregion

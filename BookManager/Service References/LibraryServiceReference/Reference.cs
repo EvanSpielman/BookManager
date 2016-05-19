@@ -356,16 +356,16 @@ namespace BookManager.LibraryServiceReference {
         System.Threading.Tasks.Task<BookManager.LibraryServiceReference.Book[]> GetAllBooksAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibraryService/SaveBook", ReplyAction="http://tempuri.org/ILibraryService/SaveBookResponse")]
-        bool SaveBook();
+        void SaveBook();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibraryService/SaveBook", ReplyAction="http://tempuri.org/ILibraryService/SaveBookResponse")]
-        System.Threading.Tasks.Task<bool> SaveBookAsync();
+        System.Threading.Tasks.Task SaveBookAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibraryService/DeleteBook", ReplyAction="http://tempuri.org/ILibraryService/DeleteBookResponse")]
-        bool DeleteBook(string title, string author);
+        void DeleteBook(string title, string author);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILibraryService/DeleteBook", ReplyAction="http://tempuri.org/ILibraryService/DeleteBookResponse")]
-        System.Threading.Tasks.Task<bool> DeleteBookAsync(string title, string author);
+        System.Threading.Tasks.Task DeleteBookAsync(string title, string author);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -403,19 +403,19 @@ namespace BookManager.LibraryServiceReference {
             return base.Channel.GetAllBooksAsync();
         }
         
-        public bool SaveBook() {
-            return base.Channel.SaveBook();
+        public void SaveBook() {
+            base.Channel.SaveBook();
         }
         
-        public System.Threading.Tasks.Task<bool> SaveBookAsync() {
+        public System.Threading.Tasks.Task SaveBookAsync() {
             return base.Channel.SaveBookAsync();
         }
         
-        public bool DeleteBook(string title, string author) {
-            return base.Channel.DeleteBook(title, author);
+        public void DeleteBook(string title, string author) {
+            base.Channel.DeleteBook(title, author);
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteBookAsync(string title, string author) {
+        public System.Threading.Tasks.Task DeleteBookAsync(string title, string author) {
             return base.Channel.DeleteBookAsync(title, author);
         }
     }

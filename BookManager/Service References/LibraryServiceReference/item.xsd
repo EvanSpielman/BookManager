@@ -20,9 +20,7 @@
   </xs:element>
   <xs:element name="SaveBookResponse">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="SaveBookResult" type="xs:boolean" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="DeleteBook">
@@ -35,9 +33,7 @@
   </xs:element>
   <xs:element name="DeleteBookResponse">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="DeleteBookResult" type="xs:boolean" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
 </xs:schema>
