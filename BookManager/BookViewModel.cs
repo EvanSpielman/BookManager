@@ -1,7 +1,7 @@
 ﻿namespace BookManager
 {
     /// <summary>
-    /// Representation of a Book domain object returned from the web service
+    ///     Representation of a Book domain object returned from the web service
     /// </summary>
     public class BookViewModel
     {

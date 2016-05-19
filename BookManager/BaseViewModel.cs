@@ -5,17 +5,10 @@ using BookManager.Annotations;
 namespace BookManager
 {
     /// <summary>
-    /// Implimentation of shared functionality of view models
+    ///     Implimentation of shared functionality of view models
     /// </summary>
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        #region Fields
-
-        private bool _isBusy;
-        private string _status;
-
-        #endregion
-
         #region Events
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -25,7 +18,7 @@ namespace BookManager
         #region Public Methods
 
         /// <summary>
-        /// Notify when a specific property has been changed
+        ///     Notify when a specific property has been changed
         /// </summary>
         /// <param name="propertyName">Optional - specify the name of the property</param>
         [NotifyPropertyChangedInvocator]
@@ -33,6 +26,13 @@ namespace BookManager
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
+
+        #region Fields
+
+        private bool _isBusy;
+        private string _status;
 
         #endregion
 

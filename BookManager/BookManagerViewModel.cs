@@ -7,24 +7,15 @@ using System.Windows.Input;
 namespace BookManager
 {
     /// <summary>
-    /// The BookManagerViewModel handles interactions between the BookManagerView and the 
-    /// web service.
+    ///     The BookManagerViewModel handles interactions between the BookManagerView and the
+    ///     web service.
     /// </summary>
     public class BookManagerViewModel : BaseViewModel, IDisposable
     {
-        #region Fields
-
-        private LibraryServiceManager _libraryServiceManager;
-        private BookViewModel _selectedBook;
-        private string _bookFilter;
-        private ICollectionView _bookCollectionView;
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
-        /// Constructs a new BookManagerViewModel
+        ///     Constructs a new BookManagerViewModel
         /// </summary>
         public BookManagerViewModel()
         {
@@ -34,10 +25,23 @@ namespace BookManager
 
         #endregion
 
+        #region Public Methods
+
+        /// <summary>
+        ///     Properly dispose of the BookManagerViewModel
+        /// </summary>
+        public void Dispose()
+        {
+            BookCollectionView.Filter = null;
+            _libraryServiceManager.Dispose();
+        }
+
+        #endregion
+
         #region Finalizer
 
         /// <summary>
-        /// Finalizes the BookManagerViewModel
+        ///     Finalizes the BookManagerViewModel
         /// </summary>
         ~BookManagerViewModel()
         {
@@ -46,10 +50,19 @@ namespace BookManager
 
         #endregion
 
+        #region Fields
+
+        private readonly LibraryServiceManager _libraryServiceManager;
+        private BookViewModel _selectedBook;
+        private string _bookFilter;
+        private ICollectionView _bookCollectionView;
+
+        #endregion
+
         #region Commands
 
         /// <summary>
-        /// Command used to delete books
+        ///     Command used to delete books
         /// </summary>
         public DelegateCommand DeleteCommand
         {
@@ -57,7 +70,7 @@ namespace BookManager
         }
 
         /// <summary>
-        /// Command used to clear the currently selected book
+        ///     Command used to clear the currently selected book
         /// </summary>
         public DelegateCommand ClearSelectionCommand
         {
@@ -69,7 +82,7 @@ namespace BookManager
         #region Properties
 
         /// <summary>
-        /// The currently selected book on the grid
+        ///     The currently selected book on the grid
         /// </summary>
         public BookViewModel SelectedBook
         {
@@ -83,7 +96,7 @@ namespace BookManager
         }
 
         /// <summary>
-        /// The filtering to apply to the grid
+        ///     The filtering to apply to the grid
         /// </summary>
         public string BookFilter
         {
@@ -97,7 +110,7 @@ namespace BookManager
         }
 
         /// <summary>
-        /// The collection of books displayed by the grid
+        ///     The collection of books displayed by the grid
         /// </summary>
         public ICollectionView BookCollectionView
         {
@@ -112,23 +125,10 @@ namespace BookManager
 
         #endregion
 
-        #region Public Methods
-
-        /// <summary>
-        /// Properly dispose of the BookManagerViewModel
-        /// </summary>
-        public void Dispose()
-        {
-            BookCollectionView.Filter = null;
-            _libraryServiceManager.Dispose();
-        }
-
-        #endregion
-
         #region Private Methods
 
         /// <summary>
-        /// Check whether the current selection can be cleared
+        ///     Check whether the current selection can be cleared
         /// </summary>
         /// <returns>True if a book is selected, and no process are running. Otherwise, false.</returns>
         private bool CanClearSelection()
@@ -137,7 +137,7 @@ namespace BookManager
         }
 
         /// <summary>
-        /// Clear the currently selected book
+        ///     Clear the currently selected book
         /// </summary>
         private void ClearSelection()
         {
@@ -145,7 +145,7 @@ namespace BookManager
         }
 
         /// <summary>
-        /// Check whether the currently selected book can be deleted
+        ///     Check whether the currently selected book can be deleted
         /// </summary>
         /// <returns>True if a book is selected, and no process are running. Otherwise, false.</returns>
         private bool CanDeleteBook()
@@ -154,7 +154,7 @@ namespace BookManager
         }
 
         /// <summary>
-        /// Delete the currently selected book asynchronously.
+        ///     Delete the currently selected book asynchronously.
         /// </summary>
         private async void DeleteBook()
         {
@@ -176,7 +176,7 @@ namespace BookManager
         }
 
         /// <summary>
-        /// Get an updated list of books from the service asynchronously
+        ///     Get an updated list of books from the service asynchronously
         /// </summary>
         private async void RefreshBooks()
         {
@@ -189,13 +189,13 @@ namespace BookManager
                 IsBusy = false;
                 Status = null;
             },
-            () => { MessageBox.Show("An error occurred while refreshing books."); });
+                () => { MessageBox.Show("An error occurred while refreshing books."); });
 
-            BookCollectionView = CollectionViewSource.GetDefaultView(books);             
+            BookCollectionView = CollectionViewSource.GetDefaultView(books);
         }
 
         /// <summary>
-        /// Set the filter on the book collection
+        ///     Set the filter on the book collection
         /// </summary>
         private void SetFilter()
         {

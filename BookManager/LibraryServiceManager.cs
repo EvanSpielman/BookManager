@@ -7,17 +7,10 @@ using BookManager.LibraryServiceReference;
 namespace BookManager
 {
     /// <summary>
-    /// Manager class which wraps the LibraryServiceClient and provides additional functionality
+    ///     Manager class which wraps the LibraryServiceClient and provides additional functionality
     /// </summary>
     public class LibraryServiceManager : IDisposable
     {
-        #region Fields
-
-        private readonly LibraryServiceClient _libraryServiceClient;
-        private readonly ModelFactory _modelFactory;
-
-        #endregion
-
         #region Constructor
 
         public LibraryServiceManager()
@@ -28,10 +21,18 @@ namespace BookManager
 
         #endregion
 
+        /// <summary>
+        ///     Dispose of any resources used by the LibraryServiceManager
+        /// </summary>
+        public void Dispose()
+        {
+            _libraryServiceClient.Close();
+        }
+
         #region Finalizer
 
         /// <summary>
-        /// Finalize the LibraryServiceManager
+        ///     Finalize the LibraryServiceManager
         /// </summary>
         ~LibraryServiceManager()
         {
@@ -40,39 +41,8 @@ namespace BookManager
 
         #endregion
 
-        #region Public Methods
-
         /// <summary>
-        /// Async call to get the book view models
-        /// </summary>
-        /// <param name="beforeAction">Action to perform before beginning the call to the web service</param>
-        /// <param name="afterAction">Action to perform after completing the call to the web service</param>
-        /// <param name="errorAction">Action to perform if the web service encounters an error</param>
-        /// <returns>The list of book view models</returns>
-        public async Task<List<BookViewModel>> GetBookViewModels(Action beforeAction, Action afterAction,
-            Action errorAction)
-        {
-            var books = await RunAsync(_libraryServiceClient.GetAllBooksAsync(), beforeAction, afterAction, errorAction);
-            return _modelFactory.CreateBookViewModels(books);
-        }
-
-        /// <summary>
-        /// Async call to delete a book from the web service
-        /// </summary>
-        /// <param name="beforeAction">Action to perform before beginning the call to the web service</param>
-        /// <param name="afterAction">Action to perform after completing the call to the web service</param>
-        /// <param name="errorAction">Action to perform if the web service encounters an error</param>
-        /// <returns>The result of the deletion - true meaning the delete was successful.</returns>
-        public async Task DeleteBook(string title, string author, Action beforeAction, Action afterAction,
-            Action errorAction)
-        {
-            await RunAsync(_libraryServiceClient.DeleteBookAsync(title, author), beforeAction, afterAction, errorAction);
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Run an asynchronous task that doesn't return a value
+        ///     Run an asynchronous task that doesn't return a value
         /// </summary>
         /// <param name="task">A task that does not return a value</param>
         /// <param name="beforeAction">Action to perform before beginning the task</param>
@@ -104,7 +74,7 @@ namespace BookManager
         }
 
         /// <summary>
-        /// Run an asynchronous task that does return a value
+        ///     Run an asynchronous task that does return a value
         /// </summary>
         /// <param name="task">A task that does return a value</param>
         /// <param name="beforeAction">Action to perform before beginning the task</param>
@@ -138,12 +108,42 @@ namespace BookManager
             return task.Status == TaskStatus.RanToCompletion ? task.Result : default(T);
         }
 
+        #region Fields
+
+        private readonly LibraryServiceClient _libraryServiceClient;
+        private readonly ModelFactory _modelFactory;
+
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
-        /// Dispose of any resources used by the LibraryServiceManager
+        ///     Async call to get the book view models
         /// </summary>
-        public void Dispose()
+        /// <param name="beforeAction">Action to perform before beginning the call to the web service</param>
+        /// <param name="afterAction">Action to perform after completing the call to the web service</param>
+        /// <param name="errorAction">Action to perform if the web service encounters an error</param>
+        /// <returns>The list of book view models</returns>
+        public async Task<List<BookViewModel>> GetBookViewModels(Action beforeAction, Action afterAction,
+            Action errorAction)
         {
-            _libraryServiceClient.Close();
+            var books = await RunAsync(_libraryServiceClient.GetAllBooksAsync(), beforeAction, afterAction, errorAction);
+            return _modelFactory.CreateBookViewModels(books);
         }
+
+        /// <summary>
+        ///     Async call to delete a book from the web service
+        /// </summary>
+        /// <param name="beforeAction">Action to perform before beginning the call to the web service</param>
+        /// <param name="afterAction">Action to perform after completing the call to the web service</param>
+        /// <param name="errorAction">Action to perform if the web service encounters an error</param>
+        /// <returns>The result of the deletion - true meaning the delete was successful.</returns>
+        public async Task DeleteBook(string title, string author, Action beforeAction, Action afterAction,
+            Action errorAction)
+        {
+            await RunAsync(_libraryServiceClient.DeleteBookAsync(title, author), beforeAction, afterAction, errorAction);
+        }
+
+        #endregion
     }
 }

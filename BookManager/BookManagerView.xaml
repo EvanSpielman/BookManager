@@ -63,7 +63,6 @@
                   AutoGenerateColumns="True"
                   DockPanel.Dock="Bottom"
                   HorizontalAlignment="Stretch"
-                  CanUserAddRows="False">
-        </DataGrid>
+                  CanUserAddRows="False" />
     </DockPanel>
 </Window>
