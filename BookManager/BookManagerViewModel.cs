@@ -119,8 +119,8 @@ namespace BookManager
         /// </summary>
         public void Dispose()
         {
-            BookCollectionView = null;
-            _libraryServiceManager = null;
+            BookCollectionView.Filter = null;
+            _libraryServiceManager.Dispose();
         }
 
         #endregion

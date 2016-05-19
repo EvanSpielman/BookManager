@@ -10,7 +10,7 @@
         <bookManager:BookManagerViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
     <DockPanel>
         <StackPanel x:Name="ButtonPanel"
@@ -20,14 +20,14 @@
             <Button x:Name="DeleteRowButton"
                     Width="Auto"
                     Content="Delete"
-                    Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=bookManager:BookManagerView}}"/>
+                    Command="{Binding DeleteCommand}" />
             <Button x:Name="ClearSelection"
                     Width="Auto"
                     Content="ClearSelection"
-                    Command="{Binding DataContext.ClearSelectionCommand, RelativeSource={RelativeSource AncestorType=bookManager:BookManagerView}}"/>
+                    Command="{Binding ClearSelectionCommand}" />
             <TextBox x:Name="BookNameFilter"
                      Width="100"
-                     Text="{Binding DataContext.BookFilter,RelativeSource={RelativeSource AncestorType=bookManager:BookManagerView}, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding BookFilter, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <StatusBar x:Name="StatusBar"
                    DockPanel.Dock="Bottom"
@@ -44,31 +44,26 @@
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <StatusBarItem Grid.Column="0">
-                <ProgressBar Minimum="0" 
-                             Maximum="100" 
-                             IsIndeterminate="True" 
-                             Visibility="{Binding DataContext.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=bookManager:BookManagerView}}" 
-                             Width="90" 
+                <ProgressBar Minimum="0"
+                             Maximum="100"
+                             IsIndeterminate="True"
+                             Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
+                             Width="90"
                              Height="32" />
             </StatusBarItem>
-            <Separator Grid.Column="1"/>
+            <Separator Grid.Column="1" />
             <StatusBarItem Grid.Column="2">
                 <TextBlock x:Name="Status"
-                           Text="{Binding DataContext.Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=bookManager:BookManagerView}}"/>
+                           Text="{Binding Status }" />
             </StatusBarItem>
         </StatusBar>
         <DataGrid x:Name="BookGrid"
-                  ItemsSource="{Binding DataContext.BookCollectionView,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=bookManager:BookManagerView}}"
-                  SelectedItem="{Binding DataContext.SelectedBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=bookManager:BookManagerView}}"
-                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding BookCollectionView }"
+                  SelectedItem="{Binding SelectedBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  AutoGenerateColumns="True"
                   DockPanel.Dock="Bottom"
                   HorizontalAlignment="Stretch"
                   CanUserAddRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Title"
-                                    Width="*"
-                                    Binding="{Binding Title}" />
-            </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
 </Window>
